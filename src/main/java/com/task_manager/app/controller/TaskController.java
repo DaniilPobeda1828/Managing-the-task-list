@@ -28,7 +28,7 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Task> getTaskById(@PathVariable UUID id) {
+    public ResponseEntity<Task> getTaskById(@PathVariable("id") UUID id) {  // ← ИСПРАВЛЕНО
         Optional<Task> task = taskService.getTaskById(id);
         return task.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
@@ -42,14 +42,14 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Task> updateTask(@PathVariable UUID id, @RequestBody Task taskDetails) {
+    public ResponseEntity<Task> updateTask(@PathVariable("id") UUID id, @RequestBody Task taskDetails) {  // ← ИСПРАВЛЕНО
         Optional<Task> updatedTask = taskService.updateTask(id, taskDetails);
         return updatedTask.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteTask(@PathVariable UUID id) {
+    public ResponseEntity<String> deleteTask(@PathVariable("id") UUID id) {  // ← ИСПРАВЛЕНО
         boolean deleted = taskService.deleteTask(id);
         if (deleted) {
             return ResponseEntity.ok("Task with id: " + id + " has been deleted");
